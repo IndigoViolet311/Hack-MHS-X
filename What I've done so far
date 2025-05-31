@@ -25,7 +25,7 @@ def customer():
     
 user = 'none'
 while (user.lower() != 'b') and (user.lower() != 'c'):
-    user = input("Are you a business owner or a customer? Please enter 'b' if you are a a business owner, or 'c' if you are a customer. ")
+    user = input("Are you a business owner or a customer? Please enter 'b' if you are a business owner, or 'c' if you are a customer. ")
     if user.lower() == 'b':
         print(" ")
         businessowner()
