@@ -44,7 +44,7 @@ def adminlogin():
     
 user = 'none'
 while (user.lower() != 'b') and (user.lower() != 'c') and (user.lower() != 'a'):
-    user = input("Are you a business owner or a customer? Please enter 'b' if you are a business owner, or 'c' if you are a customer. ")
+    user = input("Are you an admin, business owner, or a customer? Please enter 'a' if you are an admin, 'b' if you are a business owner, or 'c' if you are a customer. ")
     if user.lower() == 'b':
         print(" ")
         businessowner()
