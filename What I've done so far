@@ -5,39 +5,30 @@ def businessowner():
     location = input("What state is your business located in? ")
     product = input("What does your business sell? ")
     business = [businessname, location, product]
-    with open("businesses.txt", "a") as f:
-        f.write(str(business))
+    with open("business.csv", "a") as file: #a means append
+        writer = csv.writer(file)
+        writer.writerow([businessname, location, product]) #adds one new row
     print("Awesome! Thanks for registering " + business[0] + " with us!")
 
 def customer():
     searchterm = 'none'
-    while (searchterm != 'product' and searchterm != 'type') and searchterm != 'location':
-        searchterm = input("Would you like to search by product type or location? ")
-        searchterm = searchterm.lower()
-        if (searchterm == 'product') or (searchterm == 'type'):
-            print(" ")
-            productsearch = input("What product are you looking for? ")
-            fhand = open('businesses.txt')
-            for line in fhand:
-                line = line.rstrip()
-                if line.find(productsearch) == -1:
-                    continue
-                print(line)
-            fhand.close()
-        elif searchterm == 'location':
-            print(" ")
-            locationsearch = input("What state are you looking in?")
-            fhand = open('businesses.txt')
-            for line in fhand:
-                line = line.rstrip()
-                if line.find(locationsearch) == -1:
-                    continue
-                print(line)
-            fhand.close()
-        else:
-            print(" ")
-            print("Sorry, didn't get that! Please enter 'product', 'type', or 'location',")
-            print(" ")
+    searchterm = input("Would you like to search by 'product' or 'location?").lower()
+    if searchterm == "product":
+        product = input("What product are you looking for?").lower()
+        with open ("business.csv", "r") as file: #r is for reading/reader
+            reader = csv.reader(file)
+            for row in reader:
+                if product in row [2].lower(): #goes through every row, row[2] is product column
+                    print("Found:",row)
+    elif searchterm == "location":
+        location = input("What state are you looking in?").lower()
+        with open("business.csv", "r") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if location in row[1].lower(): #prints the row if state matches
+                    print("Found:", row)
+    else:
+        print("Please enter 'product' or location. If you are an admin or businessowner, restart the program.")
 
 def admin():
     adminpurpose = input("Enter 'view' if you want to view all businesses or change the list. Enter 'return' if you are not an administrator.")
