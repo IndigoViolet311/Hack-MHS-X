@@ -27,6 +27,13 @@ def customer():
         elif searchterm == 'location':
             print(" ")
             locationsearch = input("What state are you looking in?")
+            fhand = open('businesses.txt')
+            for line in fhand:
+                line = line.rstrip()
+                if line.find(locationsearch) == -1:
+                    continue
+                print(line)
+            fhand.close()
         else:
             print(" ")
             print("Sorry, didn't get that! Please enter 'product', 'type', or 'location',")
