@@ -22,9 +22,28 @@ def customer():
             print(" ")
             print("Sorry, didn't get that! Please enter 'product', 'type', or 'location',")
             print(" ")
+
+def admin():
+    adminpurpose = input("Enter 'view' if you want to view all businesses or change the list. Enter 'return' if you are not an administrator.")
+
+def adminlogin():
+    correctpw = "hackmhs2025"
+    loginattempts = 0
+    while loginattempts < 3:
+        inputpw = str(input("What is the admin password?"))
+        if inputpw == correctpw:
+            print("Welcome, administrator.")
+            admin()
+            return
+        else:
+            loginattempts += 1
+            if loginattempts < 3:
+                inputpw = input(f"Incorrect password. You have {3 - loginattempts} attempts.")
+    print("Too many incorrect attempts. You are not an admin.")
+    user = input("Are you a business owner or a customer? Please enter 'b' or 'c': ")
     
 user = 'none'
-while (user.lower() != 'b') and (user.lower() != 'c'):
+while (user.lower() != 'b') and (user.lower() != 'c') and (user.lower() != 'a'):
     user = input("Are you a business owner or a customer? Please enter 'b' if you are a business owner, or 'c' if you are a customer. ")
     if user.lower() == 'b':
         print(" ")
@@ -32,6 +51,9 @@ while (user.lower() != 'b') and (user.lower() != 'c'):
     elif user.lower() == 'c':
         print(" ")
         customer()
+    elif user.lower() == 'a':
+        print(" ")
+        adminlogin()
     else:
         print("Sorry, I didn't get that.")
         print(" ")
