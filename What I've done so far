@@ -1,10 +1,12 @@
-import pickle
+import csv
 
 def businessowner():
     businessname = input("What is the name of your business? ")
     location = input("What state is your business located in? ")
     product = input("What does your business sell? ")
     business = [businessname, location, product]
+    with open("businesses.txt", "a") as f:
+        f.write(str(business))
     print("Awesome! Thanks for registering " + business[0] + " with us!")
 
 def customer():
@@ -15,6 +17,13 @@ def customer():
         if (searchterm == 'product') or (searchterm == 'type'):
             print(" ")
             productsearch = input("What product are you looking for? ")
+            fhand = open('businesses.txt')
+            for line in fhand:
+                line = line.rstrip()
+                if line.find(productsearch) == -1:
+                    continue
+                print(line)
+            fhand.close()
         elif searchterm == 'location':
             print(" ")
             locationsearch = input("What state are you looking in?")
