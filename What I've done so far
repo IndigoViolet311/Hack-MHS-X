@@ -1,37 +1,93 @@
 import csv
 
+class Business:
+    def __init__(self, name, location, product):
+        self.name =  name
+        self.location = location
+        self.product = product
+    def to_list(self):
+        return [self.name,self.location,self.product]
+
 def businessowner():
-    businessname = input("What is the name of your business? ")
+    name = input("What is the name of your business? ")
     location = input("What state is your business located in? ")
     product = input("What does your business sell? ")
-    business = [businessname, location, product]
+    new_business = Business(name,location,product)
     with open("business.csv", "a") as file: #a means append
         writer = csv.writer(file)
-        writer.writerow([businessname, location, product]) #adds one new row
-    print("Awesome! Thanks for registering " + business[0] + " with us!")
+        writer.writerow([name, location, product]) #adds one new row
+    print("Awesome! Thanks for registering " + new_business[0] + " with us!")
 
 def customer():
-    searchterm = 'none'
-    searchterm = input("Would you like to search by 'product' or 'location?").lower()
-    if searchterm == "product":
-        product = input("What product are you looking for?").lower()
-        with open ("business.csv", "r") as file: #r is for reading/reader
-            reader = csv.reader(file)
-            for row in reader:
-                if product in row [2].lower(): #goes through every row, row[2] is product column
-                    print(f"Found:",row)
-    elif searchterm == "location":
-        location = input("What state are you looking in?").lower()
-        with open("business.csv", "r") as file:
-            reader = csv.reader(file)
-            for row in reader:
-                if location in row[1].lower(): #prints the row if state matches
-                    print("Found:", row)
-    else:
-        print("Please enter 'product' or location. If you are an admin or businessowner, restart the program.")
+    while True:
+        searchterm = 'none'
+        searchterm = input("Would you like to search by 'product' or 'location?").lower()
+        if searchterm == "product":
+            product = input("What product are you looking for?").lower()
+            with open ("business.csv", "r") as file: #r is for reading/reader
+                reader = csv.reader(file)
+                found = False
+                for row in reader:
+                    if product in row [2].lower(): #goes through every row, row[2] is product column
+                        print(f"Found:",row)
+                        found = True
+                if not found:
+                    print("No businesses found for that product.")
+        elif searchterm == "location":
+            location = input("What state are you looking in?").lower()
+            with open("business.csv", "r") as file:
+                reader = csv.reader(file)
+                found = False
+                for row in reader:
+                    if location in row[1].lower(): #prints the row if state matches
+                        print("Found:", row)
+                        found = True
+                if not found:
+                    print("No businesses found in that location.")
+                else:
+                    print("Please enter 'product' or 'location'.")
+        else:
+            print("Please enter 'product' or location. If you are an admin or businessowner, restart the program.")
 
 def admin():
-    adminpurpose = input("Enter 'view' if you want to view all businesses or change the list. Enter 'return' if you are not an administrator.")
+    while True:
+        choice = input("Admin menu: Enter 'view', 'delete', or 'count'. Enter 'return' if you would like to switch profiles.").lower()
+        if choice == "view":
+            with open("business.csv", "r") as file:
+                reader = csv.reader(file)
+                print("Regustered businesses:")
+                for row in reader:
+                    print(row)
+        elif choice == "delete":
+            deletethisname = input("Enter the business name to delete:")
+            newdata = []
+            deleted = False
+            with open("business.csv", "r") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if row[0].lower() != deletethisname:
+                        newdata.append(row)
+                    else: deleted = True
+            with open("business.csv", "w", newline = '') as file: #w is write mode, rewriting the file
+                writer = csv.writer(file)
+                writer.writerows(newdata) #overwrites old data in csv file with new data
+            if deleted:
+                print("Business deleted.")
+            else:
+                print("Business not found.")
+        elif choice == "count":
+            from collections import Counter #Python tool to count # of times an item appears in a list
+            with open("business.csv", "r") as file:
+                reader = csv.reader(file)
+                products = [row[2].lower() for row in reader]
+                counts = Counter(products)
+                print("Product counts:")
+                for product, count in counts.items():
+                    print(f"{product}: {count}")
+        elif choice == "return":
+            break
+        else:
+            print("Choose one of the options listed above. Try again.")
 
 def adminlogin():
     correctpw = "hackmhs2025"
