@@ -19,7 +19,7 @@ def customer():
             reader = csv.reader(file)
             for row in reader:
                 if product in row [2].lower(): #goes through every row, row[2] is product column
-                    print("Found:",row)
+                    print(f"Found:",row)
     elif searchterm == "location":
         location = input("What state are you looking in?").lower()
         with open("business.csv", "r") as file:
