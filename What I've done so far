@@ -1,0 +1,37 @@
+import pickle
+
+def businessowner():
+    businessname = input("What is the name of your business? ")
+    location = input("What state is your business located in? ")
+    product = input("What does your business sell? ")
+    business = [businessname, location, product]
+    print("Awesome! Thanks for registering " + business[0] + " with us!")
+
+def customer():
+    searchterm = 'none'
+    while (searchterm != 'product' and searchterm != 'type') and searchterm != 'location':
+        searchterm = input("Would you like to search by product type or location? ")
+        searchterm = searchterm.lower()
+        if (searchterm == 'product') or (searchterm == 'type'):
+            print(" ")
+            productsearch = input("What product are you looking for? ")
+        elif searchterm == 'location':
+            print(" ")
+            locationsearch = input("What state are you looking in?")
+        else:
+            print(" ")
+            print("Sorry, didn't get that! Please enter 'product', 'type', or 'location',")
+            print(" ")
+    
+user = 'none'
+while (user.lower() != 'b') and (user.lower() != 'c'):
+    user = input("Are you a business owner or a customer? Please enter 'b' if you are a a business owner, or 'c' if you are a customer. ")
+    if user.lower() == 'b':
+        print(" ")
+        businessowner()
+    elif user.lower() == 'c':
+        print(" ")
+        customer()
+    else:
+        print("Sorry, I didn't get that.")
+        print(" ")
